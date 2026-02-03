@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="demo/demo.csproj" />
+  <Project Path="Repository_Layer/Repository_Layer.csproj" />
+  <Project Path="Service_Layer/Service_Layer.csproj" />
+</Solution>
