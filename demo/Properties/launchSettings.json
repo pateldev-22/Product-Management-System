@@ -10,5 +10,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=Product_DB;Trusted_Connection=True;TrustServerCertificate=True;"
   }
 }

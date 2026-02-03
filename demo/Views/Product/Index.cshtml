@@ -1,0 +1,53 @@
+﻿@model List<Repository_Layer.Entity.Product>
+
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+
+<h2>Product Inventory</h2>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+</p>
+
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price(in rs.)</th>
+                <th>Stock Quantity</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("F2")</td>
+                    <td>@product.StockQuantity</td>
+                    <td>@product.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        <p>No products found. <a asp-action="Create">Create your first product</a></p>
+    </div>
+}
