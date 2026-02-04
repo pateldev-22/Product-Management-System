@@ -13,7 +13,7 @@ namespace demo.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            throw new Exception("Test exception");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

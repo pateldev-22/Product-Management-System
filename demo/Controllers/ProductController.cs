@@ -14,7 +14,7 @@ namespace demo.Controllers
             _productService = productService;
         }
 
-        public IActionResult Index(string viewType = "table")
+        public IActionResult Index()
         {
             var products = _productService.GetAllProducts();
             if (products == null)
@@ -23,7 +23,6 @@ namespace demo.Controllers
             }
 
             ViewBag.TotalProducts = _productService.GetTotalProductCount();
-            ViewBag.ViewType = viewType;
 
             return View(products);
         }

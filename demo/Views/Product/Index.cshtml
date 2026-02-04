@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Product Inventory";
-    var viewType = ViewBag.ViewType as string ?? "table";
 }
 
 <div class="row mb-4">
@@ -67,7 +66,7 @@
                         <tr>
                             <td>@product.Id</td>
                             <td>@product.Name</td>
-                            <td>product.Category</td>
+                            <td>@product.Category</td>
                             <td class="text-success fw-bold">@product.Price.ToString("F2")</td>
                             <td>@product.StockQuantity</td>
                             <td>@product.CreatedAt.ToString("yyyy-MM-dd")</td>
