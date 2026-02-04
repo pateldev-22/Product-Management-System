@@ -16,7 +16,6 @@ namespace demo.Controllers
         }
 
 
-        [ValidateAntiForgeryToken]
         public IActionResult Index()
         {
             var products = _productService.GetAllProducts();
@@ -45,7 +44,6 @@ namespace demo.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(Product product)
         {
             if (ModelState.IsValid)
@@ -93,7 +91,6 @@ namespace demo.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
@@ -131,7 +128,6 @@ namespace demo.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             bool success = _productService.DeleteProduct(id);
