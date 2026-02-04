@@ -5,6 +5,7 @@ using Service_Layer.Services;
 
 namespace demo.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -14,6 +15,8 @@ namespace demo.Controllers
             _productService = productService;
         }
 
+
+        [ValidateAntiForgeryToken]
         public IActionResult Index()
         {
             var products = _productService.GetAllProducts();
