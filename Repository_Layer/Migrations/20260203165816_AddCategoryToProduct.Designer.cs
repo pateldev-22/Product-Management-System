@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository_Layer.Data;
 
@@ -11,9 +12,11 @@ using Repository_Layer.Data;
 namespace Repository_Layer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203165816_AddCategoryToProduct")]
+    partial class AddCategoryToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,6 +56,35 @@ namespace Repository_Layer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Electronics",
+                            CreatedAt = new DateTime(2026, 2, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Laptop",
+                            Price = 999.99m,
+                            StockQuantity = 10
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Electronics",
+                            CreatedAt = new DateTime(2026, 2, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Mouse",
+                            Price = 29.99m,
+                            StockQuantity = 50
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = "Furniture",
+                            CreatedAt = new DateTime(2026, 2, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Office Chair",
+                            Price = 199.99m,
+                            StockQuantity = 25
+                        });
                 });
 #pragma warning restore 612, 618
         }

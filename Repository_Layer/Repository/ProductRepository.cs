@@ -1,18 +1,21 @@
-﻿using Repository_Layer.Data;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Repository_Layer.Data;
 using Repository_Layer.Entity;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Repository_Layer.Repository
 {
     public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext _context;
+        private readonly string _connectionString;
 
-        public ProductRepository(AppDbContext context)
+        public ProductRepository(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public List<Product> GetAllProducts()
@@ -46,6 +49,22 @@ namespace Repository_Layer.Repository
                 _context.SaveChanges();
             }
         }
-    }
 
+        public int GetTotalProductCount()
+        {
+            int count = 0;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT COUNT(*) FROM Products";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+                count = (int)command.ExecuteScalar();
+                connection.Close();
+            }
+
+            return count;
+        }
+    }
 }

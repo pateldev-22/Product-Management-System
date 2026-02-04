@@ -1,5 +1,6 @@
 ﻿using Repository_Layer.Entity;
 using Repository_Layer.Repository;
+using System.Collections.Generic;
 
 namespace Service_Layer.Services
 {
@@ -52,6 +53,10 @@ namespace Service_Layer.Services
             _productRepository.DeleteProduct(id);
             return true;
         }
-    }
 
+        public int GetTotalProductCount()
+        {
+            return _productRepository.GetTotalProductCount();
+        }
+    }
 }

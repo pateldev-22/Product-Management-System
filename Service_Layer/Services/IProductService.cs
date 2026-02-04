@@ -1,5 +1,5 @@
 ﻿using Repository_Layer.Entity;
-
+using System.Collections.Generic;
 
 namespace Service_Layer.Services
 {
@@ -10,6 +10,6 @@ namespace Service_Layer.Services
         bool AddProduct(Product product);
         bool UpdateProduct(Product product);
         bool DeleteProduct(int id);
+        int GetTotalProductCount();
     }
-
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Repository_Layer.Entity;
 using Service_Layer.Services;
 
@@ -13,18 +14,31 @@ namespace demo.Controllers
             _productService = productService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string viewType = "table")
         {
             var products = _productService.GetAllProducts();
-            if(products == null)
+            if (products == null)
             {
-                products=new List<Product>();
+                products = new List<Product>();
             }
+
+            ViewBag.TotalProducts = _productService.GetTotalProductCount();
+            ViewBag.ViewType = viewType;
+
             return View(products);
         }
 
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(new[]
+            {
+                "Electronics",
+                "Furniture",
+                "Clothing",
+                "Books",
+                "Sports",
+                "Food & Beverages"
+            });
             return View();
         }
 
@@ -37,10 +51,21 @@ namespace demo.Controllers
                 bool success = _productService.AddProduct(product);
                 if (success)
                 {
+                    TempData["SuccessMessage"] = "Product created successfully!";
                     return RedirectToAction(nameof(Index));
                 }
                 ModelState.AddModelError("", "Failed to add product. Check validation rules.");
             }
+
+            ViewBag.Categories = new SelectList(new[]
+            {
+                "Electronics",
+                "Furniture",
+                "Clothing",
+                "Books",
+                "Sports",
+                "Food & Beverages"
+            });
             return View(product);
         }
 
@@ -51,6 +76,17 @@ namespace demo.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Categories = new SelectList(new[]
+            {
+                "Electronics",
+                "Furniture",
+                "Clothing",
+                "Books",
+                "Sports",
+                "Food & Beverages"
+            }, product.Category);
+
             return View(product);
         }
 
@@ -63,10 +99,22 @@ namespace demo.Controllers
                 bool success = _productService.UpdateProduct(product);
                 if (success)
                 {
+                    TempData["SuccessMessage"] = "Product updated successfully!";
                     return RedirectToAction(nameof(Index));
                 }
                 ModelState.AddModelError("", "Failed to update product.");
             }
+
+            ViewBag.Categories = new SelectList(new[]
+            {
+                "Electronics",
+                "Furniture",
+                "Clothing",
+                "Books",
+                "Sports",
+                "Food & Beverages"
+            }, product.Category);
+
             return View(product);
         }
 
@@ -84,9 +132,16 @@ namespace demo.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            _productService.DeleteProduct(id);
+            bool success = _productService.DeleteProduct(id);
+            if (success)
+            {
+                TempData["SuccessMessage"] = "Product deleted successfully!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to delete product.";
+            }
             return RedirectToAction(nameof(Index));
         }
     }
-
 }
